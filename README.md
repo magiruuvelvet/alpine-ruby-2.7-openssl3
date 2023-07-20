@@ -16,6 +16,11 @@ Run `./build-container.sh` to build the container. The resulting container will 
 have a single layer. All temporary build files, build dependencies, and the toolchain
 are removed from the final container to reduce its size from ~512MB to ~38MB (your results may vary).
 
+## Download
+
+Get a prebuilt container from [here](https://gitlab.com/magiruuvelvet/alpine-ruby-2.7-openssl3/container_registry):
+`docker pull registry.gitlab.com/magiruuvelvet/alpine-ruby-2.7-openssl3`
+
 ## References
 
  - https://gitweb.gentoo.org/repo/gentoo.git/tree/dev-lang/ruby/ruby-3.2.2-r4.ebuild
