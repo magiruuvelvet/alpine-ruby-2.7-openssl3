@@ -1,0 +1,41 @@
+From 28f3e038805a4f396f228c6884c531677c075867 Mon Sep 17 00:00:00 2001
+From: Kazuki Yamaguchi <k@rhe.jp>
+Date: Mon, 9 Mar 2020 15:23:32 +0900
+Subject: [PATCH] digest: do not depend on ext/openssl/deprecation.rb
+
+ext/openssl/deprecation.rb has been removed in ext/openssl upstream[1].
+
+It was originally introduced to detect and prevent linking against
+Apple's bundled (and very outdated) version of OpenSSL. It is long gone
+and the header files do not exist in current versions of macOS.
+
+The dependency in ext/digest was introduced by commit 26e258c807c2.
+Note that the original issue[2] is resolved without this dependency.
+The commit also added the pkg_config("openss") call to match what
+ext/openssl does.
+
+[1] https://github.com/ruby/openssl/pull/333
+[2] https://bugs.ruby-lang.org/issues/6379
+---
+ ext/digest/digest_conf.rb | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/ext/digest/digest_conf.rb b/ext/digest/digest_conf.rb
+index 915b61877f97f..1af401a06b0c7 100644
+--- a/ext/digest/digest_conf.rb
++++ b/ext/digest/digest_conf.rb
+@@ -65,13 +65,12 @@ def digest_conf(name, hdr = name, funcs = nil, types = nil)
+ 
+     dir_config("openssl")
+     pkg_config("openssl")
+-    require File.expand_path('../../openssl/deprecation', __FILE__)
+     if find_openssl_library
+       funcs ||= name.upcase
+       funcs = Array(funcs)
+       types ||= funcs
+       hdr = "openssl/#{hdr}.h"
+-      if funcs.all? {|func| OpenSSL.check_func("#{func}_Transform", hdr)} &&
++      if funcs.all? {|func| have_func("#{func}_Transform", hdr)} &&
+          types.all? {|type| have_type("#{type}_CTX", hdr)}
+         $defs << "-D#{name.upcase}_USE_OPENSSL"
+         $headers << "#{name}ossl.h"
