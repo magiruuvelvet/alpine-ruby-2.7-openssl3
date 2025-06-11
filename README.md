@@ -1,6 +1,6 @@
 # Alpine Ruby container for legacy Rails applications
 
-- Alpine 3.18
+- Alpine 3.22
 - OpenSSL 3.0
 - Ruby 2.7.8
 
