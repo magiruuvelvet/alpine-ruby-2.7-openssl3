@@ -18,8 +18,9 @@ are removed from the final container to reduce its size from ~512MB to ~38MB (yo
 
 ## Download
 
-Get a prebuilt container from [here](https://gitlab.com/magiruuvelvet/alpine-ruby-2.7-openssl3/container_registry):
-`docker pull registry.gitlab.com/magiruuvelvet/alpine-ruby-2.7-openssl3`
+Download prebuilt containers from:
+- GitHub: `docker pull ghcr.io/magiruuvelvet/ruby:2.7.8-alpine3.22-openssl3`
+- GitLab: `docker pull registry.gitlab.com/magiruuvelvet/alpine-ruby-2.7-openssl3:2.7.8-alpine3.22-openssl3`
 
 ## Q & A
 
